@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lift Coffee House - Pagosa Springs, CO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header #branding {
+            float: left;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header .highlight, header .current a {
+            color: #e8491d;
+            font-weight: bold;
+        }
+        header a:hover {
+            color: #cccccc;
+            font-weight: bold;
+        }
+        #showcase {
+            min-height: 500px;
+            background: #ff0000;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+        }
+        #showcase h1 {
+            margin-top: 100px;
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+        #showcase p {
+            font-size: 20px;
+        }
+        #boxes {
+            margin-top: 20px;
+        }
+        #boxes .box {
+            float: left;
+            width: 30%;
+            padding: 10px;
+            text-align: center;
+        }
+        #boxes .box img {
+            width: 90px;
+        }
+        footer {
+            padding: 20px;
+            margin-top: 20px;
+            color: #ffffff;
+            background-color: #e8491d;
+            text-align: center;
+        }
+
+        /* Coffee Machine Animation CSS */
+        .container-coffee {
+            width: 300px;
+            height: 280px;
+            position: absolute;
+            top: calc(80% - 140px);
+            left: calc(20% - 150px);
+        }
+        .coffee-header {
+            width: 100%;
+            height: 80px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #ddcfcc;
+            border-radius: 10px;
+        }
+        .coffee-header__buttons {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            top: 25px;
+            background-color: #282323;
+            border-radius: 50%;
+        }
+        .coffee-header__buttons::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            bottom: -8px;
+            left: calc(50% - 4px);
+            background-color: #615e5e;
+        }
+        .coffee-header__button-one {
+            left: 15px;
+        }
+        .coffee-header__button-two {
+            left: 50px;
+        }
+        .coffee-header__display {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: calc(50% - 25px);
+            left: calc(50% - 25px);
+            border-radius: 50%;
+            background-color: #9acfc5;
+            border: 5px solid #43beae;
+            box-sizing: border-box;
+        }
+        .coffee-header__details {
+            width: 8px;
+            height: 20px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #9b9091;
+            box-shadow: -12px 0 0 #9b9091, -24px 0 0 #9b9091;
+        }
+        .coffee-medium {
+            width: 90%;
+            height: 160px;
+            position: absolute;
+            top: 80px;
+            left: calc(50% - 45%);
+            background-color: #bcb0af;
+        }
+        .coffee-medium:before {
+            content: "";
+            width: 90%;
+            height: 100px;
+            background-color: #776f6e;
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 45%);
+            border-radius: 20px 20px 0 0;
+        }
+        .coffee-medium__exit {
+            width: 60px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            left: calc(50% - 30px);
+            background-color: #231f20;
+        }
+        .coffee-medium__exit::before {
+            content: "";
+            width: 50px;
+            height: 20px;
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            bottom: -20px;
+            left: calc(50% - 25px);
+            background-color: #231f20;
+        }
+        .coffee-medium__exit::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            bottom: -30px;
+            left: calc(50% - 5px);
+            background-color: #231f20;
+        }
+        .coffee-medium__arm {
+            width: 70px;
+            height: 20px;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            background-color: #231f20;
+        }
+        .coffee-medium__arm::before {
+            content: "";
+            width: 15px;
+            height: 5px;
+            position: absolute;
+            top: 7px;
+            left: -15px;
+            background-color: #9e9495;
+        }
+        .coffee-medium__cup {
+            width: 80px;
+            height: 47px;
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 40px);
+            background-color: #FFF;
+            border-radius: 0 0 70px 70px / 0 0 110px 110px;
+        }
+        .coffee-medium__cup::after {
+            content: "";
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 6px;
+            right: -13px;
+            border: 5px solid #FFF;
+            border-radius: 50%;
+        }
+        @keyframes liquid {
+            0% {
+                height: 0px;  
+                opacity: 1;
+            }
+            5% {
+                height: 0px;  
+                opacity: 1;
+            }
+            20% {
+                height: 62px;  
+                opacity: 1;
+            }
+            95% {
+                height: 62px;
+                opacity: 1;
+            }
+            100% {
+                height: 62px;
+                opacity: 0;
+            }
+        }
+        .coffee-medium__liquid {
+            width: 6px;
+            height: 63px;
+            opacity: 0;
+            position: absolute;
+            top: 50px;
+            left: calc(50% - 3px);
+            background-color: #74372b;
+            animation: liquid 4s 4s linear infinite;
+        }
+        .coffee-medium__smoke {
+            width: 8px;
+            height: 20px;
+            position: absolute;  
+            border-radius: 5px;
+            background-color: #b3aeae;
+        }
+        @keyframes smokeOne {
+            0% {
+                bottom: 20px;
+                opacity: 0;
+            }
+            40% {
+                bottom: 50px;
+                opacity: .5;
+            }
+            80% {
+                bottom: 80px;
+                opacity: .3;
+            }
+            100% {
+                bottom: 80px;
+                opacity: 0;
+            }
+        }
+        @keyframes smokeTwo {
+            0% {
+                bottom: 40px;
+                opacity: 0;
+            }
+            40% {
+                bottom: 70px;
+                opacity: .5;
+            }
+            80% {
+                bottom: 80px;
+                opacity: .3;
+            }
+            100% {
+                bottom: 80px;
+                opacity: 0;
+            }
+        }
+        .coffee-medium__smoke-one {
+            opacity: 0;
+            bottom: 50px;
+            left: 102px;
+            animation: smokeOne 3s 4s linear infinite;
+        }
+        .coffee-medium__smoke-two {
+            opacity: 0;
+            bottom: 70px;
+            left: 118px;
+            animation: smokeTwo 3s 5s linear infinite;
+        }
+        .coffee-medium__smoke-three {
+            opacity: 0;
+            bottom: 65px;
+            right: 118px;
+            animation: smokeTwo 3s 6s linear infinite;
+        }
+        .coffee-medium__smoke-for {
+            opacity: 0;
+            bottom: 50px;
+            right: 102px;
+            animation: smokeOne 3s 5s linear infinite;
+        }
+        .coffee-footer {
+            width: 95%;
+            height: 15px;
+            position: absolute;
+            bottom: 25px;
+            left: calc(50% - 47.5%);
+            background-color: #41bdad;
+            border-radius: 10px;
+        }
+        .coffee-footer::after {
+            content: "";
+            width: 106%;
+            height: 26px;
+            position: absolute;
+            bottom: -25px;
+            left: -8px;
+            background-color: #000;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container-coffee {
+                display: none;
+            }
+            .container {
+                width: 90%;
+            }
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 100%;
+                padding: 0 10px;
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .box img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .logo {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        /* Initially hide all menu items under each section */
+        .menu-section ul {
+            display: none;
+        }
+
+        /* Show menu items when the section is hovered */
+        .menu-section:hover ul {
+            display: block;
+        }
+
+        /* Optional: Add cursor pointer to indicate clickable headers */
+        .menu-section h3 {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">The Lift</span> Coffee House</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <div class="container">
+            <h1>Welcome to The Lift Coffee House</h1>
+            <p>Serving quality coffee roasted in nearby Durango, brewed fresh daily in Pagosa Springs, CO</p>
+            
+            <!-- Coffee Machine Animation -->
+            <div class="container-coffee">
+                <div class="coffee-header">
+                    <div class="coffee-header__buttons coffee-header__button-one"></div>
+                    <div class="coffee-header__buttons coffee-header__button-two"></div>
+                    <div class="coffee-header__display"></div>
+                    <div class="coffee-header__details"></div>
+                </div>
+                <div class="coffee-medium">
+                    <div class="coffee-medium__exit"></div>
+                    <div class="coffee-medium__arm"></div>
+                    <div class="coffee-medium__liquid"></div>
+                    <div class="coffee-medium__smoke coffee-medium__smoke-one"></div>
+                    <div class="coffee-medium__smoke coffee-medium__smoke-two"></div>
+                    <div class="coffee-medium__smoke coffee-medium__smoke-three"></div>
+                    <div class="coffee-medium__smoke coffee-medium__smoke-for"></div>
+                    <div class="coffee-medium__cup"></div>
+                </div>
+                <div class="coffee-footer"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>Welcome to The Lift Coffee Shop, where every cup tells a story! Nestled in an idyllic spot just off the San Juan River near Cotton Hole, and steps away from the scenic walking path, our café is the perfect place to start off your "Pa-go-slow" vacation with a caffeinated kick.</p>
+            <p>Owned and operated by Dali and Miro, two self-proclaimed coffee fanatics, The Lift has quickly become a local favorite. Their passion for the perfect cup of joe is as strong as the coffee they brew. Whether you're a local or just passing through, Dali and Miro are dedicated to making sure your coffee experience is one you won't soon forget. Come for the coffee, stay for the vibe—The Lift is where your perfect cup awaits!</p>
+        </div>
+    </section>
+
+    <section id="boxes">
+        <div class="container">
+            <div class="box">
+                <img src="https://static.vecteezy.com/system/resources/previews/000/599/173/original/coffee-icon-vector.jpg" alt="Fresh Coffee">
+                <h3>Fresh Brewed Coffee</h3>
+                <p>Enjoy our locally roasted, freshly brewed coffee</p>
+            </div>
+            <div class="box">
+                <img src="https://www.kindpng.com/picc/m/178-1786850_maps-icono-mapa-hd-png-download.png" alt="New Location">
+                <h3>New Location</h3>
+                <p>Visit us at our new address: 101 Pagosa Street!</p>
+            </div>
+            <div class="box">
+                <img src="https://static.vecteezy.com/system/resources/previews/000/633/268/original/vector-clock-icon-symbol-sign.jpg" alt="Hours">
+                <h3>Hours</h3>
+                <p>Sun-Tue: 7am-2pm<br>Wed: CLOSED<br>Thu-Sat: 7am-2pm</p>
+            </div>
+ 	        <div class="logo">
+                <img src="https://images.squarespace-cdn.com/content/v1/654514438d66f43eb4bff264/dba1ae9b-fbb8-4126-8d0c-299e86faf703/IMG_5653.JPG?format=1500w" alt="Logo">
+            </div>
+        </div>
+    </section>
+
+    <section id="menu">
+        <div class="container">
+            <h2>Menu</h2>
+            
+            <div class="menu-section">
+                <h3>Coffee</h3>
+                <ul>
+                    <li>Pour Over - 16 oz: $5.75</li>
+                    <li>Drip Coffee
+                        <ul>
+                            <li>12 oz: $3.00</li>
+                            <li>16 oz: $3.50</li>
+                            <li>20 oz: $4.00</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <h3>Tea</h3>
+                <ul>
+                    <li>Regular Tea
+                        <ul>
+                            <li>12 oz: $3.25</li>
+                            <li>16 oz: $4.00</li>
+                            <li>20 oz: $4.50</li>
+                        </ul>
+                    </li>
+                    <li>Mate
+                        <ul>
+                            <li>12 oz: $5.00</li>
+                            <li>16 oz: $5.75</li>
+                        </ul>
+                    </li>
+                    <li>Mate Latte
+                        <ul>
+                            <li>12 oz: $5.75</li>
+                            <li>16 oz: $6.25</li>
+                        </ul>
+                    </li>
+                    <li>Chai Latte
+                        <ul>
+                            <li>12 oz: $5.00</li>
+                            <li>16 oz: $5.50</li>
+                            <li>20 oz: $6.00</li>
+                        </ul>
+                    </li>
+                    <li>Dirty Chai
+                        <ul>
+                            <li>12 oz: $5.25</li>
+                            <li>16 oz: $5.75</li>
+                            <li>20 oz: $6.50</li>
+                        </ul>
+                    </li>
+                    <li>London Fog
+                        <ul>
+                            <li>12 oz: $5.00</li>
+                            <li>16 oz: $5.50</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <h3>Food</h3>
+                <ul>
+                    <li>Bagels: $4.85</li>
+                    <li>Sandwich (with chips)
+                        <ul>
+                            <li>Veg: $10.00</li>
+                            <li>Ham: $10.50</li>
+                            <li>Ingredients: Spinach, Avocado, Carrots, Sprouts, Tomato, Cucumber, Cheese (add ham for the ham sandwich).</li>
+                        </ul>
+                    </li>
+                    <li>Muffins: $4.00</li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <h3>Extras</h3>
+                <ul>
+                    <li>Add shot, add flavor, non-dairy milk (prices vary)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>The Lift Coffee House &copy; 2024 | 101 Pagosa Street, Pagosa Springs, CO 81147 | (970) 264-0653</p>
+    </footer>
+</body>
+</html>
