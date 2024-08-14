@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Lift Coffee House - Pagosa Springs, CO</title>
+    <meta name="description" content="The Lift Coffee House serves locally roasted, fresh coffee in Pagosa Springs, CO. Visit us for a cozy experience near the San Juan River.">
+    <meta name="keywords" content="Coffee, Pagosa Springs, Cafe, The Lift Coffee House, Locally Roasted, Coffee Shop">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +26,9 @@
             padding-top: 30px;
             min-height: 70px;
             border-bottom: #e8491d 3px solid;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         header a {
             color: #ffffff;
@@ -75,6 +80,8 @@
         }
         #boxes .box img {
             width: 90px;
+            height: auto;
+            alt: "Icon representing Fresh Coffee";
         }
         footer {
             padding: 20px;
@@ -375,6 +382,7 @@
         .box img {
             max-width: 100px;
             height: auto;
+            alt: "Coffee House Feature Icon";
         }
 
         .logo {
@@ -386,6 +394,7 @@
         .logo img {
             max-width: 100px;
             height: auto;
+            alt: "The Lift Coffee House Logo";
         }
 
         /* Initially hide all menu items under each section */
@@ -406,31 +415,26 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div id="branding">
-                <h1><span class="highlight">The Lift</span> Coffee House</h1>
-            </div>
-            <nav>
-                <ul>
-
-                    <li class="current"><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#menu">Menu</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-
-            </nav>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12700.442800576264!2d-107.02112086518001!3d37.268801967857485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x873ddc9e424fa9ab%3A0xe22e14442164e120!2sThe%20Lift%20Coffee%20House!5e0!3m2!1sen!2sus!4v1723603172664!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<header>
+    <div class="container">
+        <div id="branding">
+            <h1><span class="highlight">The Lift</span> Coffee House</h1>
         </div>
-    </header>
+        <nav>
+            <ul>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Location</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="peel-effect"></div>
+</header>
 
     <section id="showcase">
         <div class="container">
             <h1>Welcome to The Lift Coffee House</h1>
             <p>Serving quality coffee roasted in nearby Durango, brewed fresh daily in Pagosa Springs, CO</p>
 
-            
             <!-- Coffee Machine Animation -->
             <div class="container-coffee">
                 <div class="coffee-header">
@@ -460,9 +464,14 @@
             <h2>About Us</h2>
             <p>Welcome to The Lift Coffee Shop, where every cup tells a story! Nestled in an idyllic spot just off the San Juan River near Cotton Hole, and steps away from the scenic walking path, our café is the perfect place to start off your "Pa-go-slow" vacation with a caffeinated kick.</p>
             <p>Owned and operated by Dali and Miro, two self-proclaimed coffee fanatics, The Lift has quickly become a local favorite. Their passion for the perfect cup of joe is as strong as the coffee they brew. Whether you're a local or just passing through, Dali and Miro are dedicated to making sure your coffee experience is one you won't soon forget. Come for the coffee, stay for the vibe—The Lift is where your perfect cup awaits!</p>
+    <p style="color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:1px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">
+        <a href="https://www.instagram.com/p/C7jxQVRu70E/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==" style="color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px;" target="_blank">CHECK OUT OUR INSTAGRAM!</a>
+    </p>
+</blockquote>
+<script async src="//www.instagram.com/embed.js"></script>
         </div>
     </section>
-
+	
     <section id="boxes">
         <div class="container">
             <div class="box">
@@ -480,13 +489,14 @@
                 <h3>Hours</h3>
                 <p>Sun-Tue: 7am-2pm<br>Wed: CLOSED<br>Thu-Sat: 7am-2pm</p>
             </div>
+<section id="menu">
  	        <div class="logo">
                 <img src="https://images.squarespace-cdn.com/content/v1/654514438d66f43eb4bff264/dba1ae9b-fbb8-4126-8d0c-299e86faf703/IMG_5653.JPG?format=1500w" alt="Logo">
             </div>
         </div>
     </section>
 
-    <section id="menu">
+    
         <div class="container">
             <h2>Menu</h2>
             
@@ -574,6 +584,18 @@
     </section>
 
     <footer id="contact">
+
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12700.442800576264!2d-107.02112086518001!3d37.268801967857485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x873ddc9e424fa9ab%3A0xe22e14442164e120!2sThe%20Lift%20Coffee%20House!5e0!3m2!1sen!2sus!4v1723607686604!5m2!1sen!2sus" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+   <p>
+    </div>
+<a href="https://www.facebook.com/theliftcoffeehouse" target="_blank" style="text-decoration:none;">
+    <button style="background-color:#4267B2; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; font-size:16px;">
+        Visit us on Facebook
+    </button>
+</a>
+
+
         <p>The Lift Coffee House &copy; 2024 | 101 Pagosa Street, Pagosa Springs, CO 81147 | (970) 264-0653</p>
     </footer>
 </body>
