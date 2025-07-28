@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>55 EZY</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .section {
+      margin-bottom: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .suggestion {
+      background: #e0e0e0;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .suggestion:hover {
+      background: #d0d0d0;
+    }
+    .selected {
+      background: #4caf50;
+      color: white;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .fives-list label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .progress {
+      text-align: center;
+    }
+    .progress-bar {
+      width: 100%;
+      background: #e0e0e0;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #4caf50;
+      transition: width 0.3s;
+    }
+    .reset {
+      background: #f44336;
+    }
+    .reset:hover {
+      background: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <h1>55 EZY</h1>
+  
+  <!-- Setup Section -->
+  <div class="section" id="setup-section">
+    <h2>Choose Your 5 Fives</h2>
+    <p>Select 5 from suggestions or enter your own (max 5):</p>
+    <div class="suggestions" id="suggestions">
+      <span class="suggestion">Drink 8oz water</span>
+      <span class="suggestion">Walk 10 minutes</span>
+      <span class="suggestion">Meditate 5 minutes</span>
+      <span class="suggestion">Read a page</span>
+      <span class="suggestion">Write a gratitude</span>
+      <span class="suggestion">Stretch 5 minutes</span>
+    </div>
+    <input type="text" id="custom-five" placeholder="Enter custom five...">
+    <button onclick="addCustomFive()">Add Custom Five</button>
+    <p>Selected: <span id="selected-count">0</span>/5</p>
+    <button onclick="startProgram()" id="start-button" disabled>Start Program</button>
+  </div>
+  
+  <!-- Daily Check-in Section -->
+  <div class="section" id="checkin-section" style="display: none;">
+    <h2>Day <span id="current-day">1</span> of 35</h2>
+    <p>Check off completed fives (5 points each):</p>
+    <div class="fives-list" id="fives-list"></div>
+    <button onclick="submitDay()">Submit Day</button>
+  </div>
+  
+  <!-- Progress Section -->
+  <div class="section" id="progress-section" style="display: none;">
+    <h2>Progress</h2>
+    <p>Total Points: <span id="total-points">0</span></p>
+    <p>Completion: <span id="completion-percentage">0</span>%</p>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+    </div>
+    <button class="reset" onclick="resetProgram()">Reset Program</button>
+  </div>
+
+  <script>
+    let fives = [];
+    let completedFives = [];
+    let currentDay = 1;
+    let totalPoints = 0;
+    const totalDays = 35;
+    const maxFives = 5;
+
+    // Load saved data
+    function loadData() {
+      const saved = localStorage.getItem('55ezy');
+      if (saved) {
+        const data = JSON.parse(saved);
+        fives = data.fives || [];
+        completedFives = data.completedFives || [];
+        currentDay = data.currentDay || 1;
+        totalPoints = data.totalPoints || 0;
+        updateUI();
+      }
+    }
+
+    // Save data
+    function saveData() {
+      localStorage.setItem('55ezy', JSON.stringify({
+        fives,
+        completedFives,
+        currentDay,
+        totalPoints
+      }));
+    }
+
+    // Initialize suggestions
+    document.querySelectorAll('.suggestion').forEach(s => {
+      s.addEventListener('click', () => toggleSuggestion(s));
+    });
+
+    // Toggle suggestion selection
+    function toggleSuggestion(element) {
+      if (element.classList.contains('selected')) {
+        element.classList.remove('selected');
+        fives = fives.filter(f => f !== element.textContent);
+      } else if (fives.length < maxFives) {
+        element.classList.add('selected');
+        fives.push(element.textContent);
+      }
+      updateSelectedCount();
+    }
+
+    // Add custom five
+    function addCustomFive() {
+      const input = document.getElementById('custom-five');
+      const value = input.value.trim();
+      if (value && fives.length < maxFives && !fives.includes(value)) {
+        fives.push(value);
+        input.value = '';
+        updateSelectedCount();
+      }
+    }
+
+    // Update selected count and start button
+    function updateSelectedCount() {
+      document.getElementById('selected-count').textContent = fives.length;
+      document.getElementById('start-button').disabled = fives.length !== maxFives;
+    }
+
+    // Start program
+    function startProgram() {
+      if (fives.length === maxFives) {
+        document.getElementById('setup-section').style.display = 'none';
+        document.getElementById('checkin-section').style.display = 'block';
+        document.getElementById('progress-section').style.display = 'block';
+        updateFivesList();
+        saveData();
+      }
+    }
+
+    // Update fives checklist
+    function updateFivesList() {
+      const list = document.getElementById('fives-list');
+      list.innerHTML = '';
+      fives.forEach(five => {
+        const div = document.createElement('div');
+        div.innerHTML = `<label><input type="checkbox" value="${five}"> ${five}</label>`;
+        list.appendChild(div);
+      });
+      document.getElementById('current-day').textContent = currentDay;
+    }
+
+    // Submit daily completions
+    function submitDay() {
+      const checkboxes = document.querySelectorAll('#fives-list input:checked');
+      const dayCompletions = Array.from(checkboxes).map(cb => cb.value);
+      completedFives.push(...dayCompletions);
+      totalPoints += dayCompletions.length * 5;
+      currentDay++;
+      
+      if (currentDay > totalDays) {
+        alert('Program complete! Check your progress.');
+        document.getElementById('checkin-section').style.display = 'none';
+      } else {
+        updateFivesList();
+      }
+      
+      updateProgress();
+      saveData();
+    }
+
+    // Update progress display
+    function updateProgress() {
+      const totalPossible = totalDays * maxFives;
+      const completionPercentage = (completedFives.length / totalPossible) * 100;
+      document.getElementById('total-points').textContent = totalPoints;
+      document.getElementById('completion-percentage').textContent = completionPercentage.toFixed(2);
+      document.getElementById('progress-fill').style.width = `${completionPercentage}%`;
+    }
+
+    // Reset program
+    function resetProgram() {
+      if (confirm('Reset all progress?')) {
+        fives = [];
+        completedFives = [];
+        currentDay = 1;
+        totalPoints = 0;
+        localStorage.removeItem('55ezy');
+        document.getElementById('setup-section').style.display = 'block';
+        document.getElementById('checkin-section').style.display = 'none';
+        document.getElementById('progress-section').style.display = 'none';
+        document.querySelectorAll('.suggestion').forEach(s => s.classList.remove('selected'));
+        updateSelectedCount();
+        updateProgress();
+      }
+    }
+
+    // Update UI based on state
+    function updateUI() {
+      if (fives.length === maxFives) {
+        document.getElementById('setup-section').style.display = 'none';
+        document.getElementById('checkin-section').style.display = 'block';
+        document.getElementById('progress-section').style.display = 'block';
+        updateFivesList();
+        updateProgress();
+      }
+    }
+
+    // Load data on page load
+    loadData();
+  </script>
+</body>
+</html>
